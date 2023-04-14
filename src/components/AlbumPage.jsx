@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -40,17 +40,13 @@ const AlbumPage = () => {
       <Container>
         <Row>
           <ListGroup>
-            {songs.data !== null &&
-              songs.data.map((song) => (
-                <Col key={song.track.id}>
-                  <div>
-                    <img className="img-fluid" src={song.cover_big} alt="1" />
-                  </div>
-                  <div>
-                    <ListGroup.Item>{song.track.title}</ListGroup.Item>
-                  </div>
-                </Col>
-              ))}
+            {songs.tracks?.data.map((track) => (
+              <Col>
+                <div>
+                  <ListGroup.Item key={track.id}>{track.title}</ListGroup.Item>
+                </div>
+              </Col>
+            ))}
           </ListGroup>
         </Row>
       </Container>
@@ -59,3 +55,4 @@ const AlbumPage = () => {
 };
 
 export default AlbumPage;
+//            <img className="img-fluid" src={songs.cover_big} alt="1" />

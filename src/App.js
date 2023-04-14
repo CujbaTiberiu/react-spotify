@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Homepage from "./components/Homepage";
+import ArtistPage from "./components/ArtistPage";
+import AlbumPage from "./components/AlbumPage";
+import { Container } from "react-bootstrap";
+import MySide from "./components/MySide";
+import MyNav from "./components/MyNav";
+import MyPlayer from "./components/MyPlayer";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Container className="mainContainer d-flex" fluid>
+        <Container className="sideCont" fluid>
+          <MySide />
+        </Container>
+        <Container className="myElements">
+          <MyNav />
+          <Routes>
+            <Route path="/" element={<Homepage />}></Route>
+            <Route path="/artist/:id" element={<ArtistPage />}></Route>
+            <Route path="/album/:id" element={<AlbumPage />}></Route>
+          </Routes>
+          <MyPlayer />
+        </Container>
+      </Container>
+    </BrowserRouter>
   );
 }
 

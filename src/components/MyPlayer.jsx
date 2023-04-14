@@ -9,7 +9,7 @@ import repeat from "./playerbuttons/Repeat.png";
 
 const MyPlayer = () => {
   return (
-    <Container fluid className="bg-container myPlayer">
+    <Container fluid className="bg-container myPlayer mt-4">
       <Row className="justify-content-center">
         <Col
           xs={4}

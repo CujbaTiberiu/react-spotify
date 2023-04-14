@@ -20,7 +20,7 @@ function App() {
           <MyNav />
           <Routes>
             <Route path="/" element={<Homepage />}></Route>
-            <Route path="/artist/:id" element={<ArtistPage />}></Route>
+            <Route path="/artist/:name" element={<ArtistPage />}></Route>
             <Route path="/album/:id" element={<AlbumPage />}></Route>
           </Routes>
           <MyPlayer />

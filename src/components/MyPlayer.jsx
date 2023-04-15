@@ -41,7 +41,7 @@ const MyPlayer = () => {
       </Row>
       <Row className="justify-content-center playBar">
         <Col xs={8} md={6}>
-          <p className="text-center">{showSong}</p>
+          <p className="text-center song__title">{showSong}</p>
           <ProgressBar now={0} />
         </Col>
       </Row>

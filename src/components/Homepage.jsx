@@ -1,6 +1,7 @@
 import { Container, Row } from "react-bootstrap";
 import AlbumCard from "./AlbumCard";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const Homepage = () => {
   // eslint-disable-next-line no-unused-vars
@@ -29,7 +30,11 @@ const Homepage = () => {
   let hipHopArtists = ["eminem", "snoopdogg", "lilwayne", "drake", "kanyewest"];
   const [rockalbums, setRockAlbums] = useState([]);
   const [popalbums, setPopAlbums] = useState([]);
-  const [hiphopalbums, sethiphopAlbums] = useState([]);
+  const [hiphopalbums, setHiphopAlbums] = useState([]);
+  const [queryalbums, setQueryAlbums] = useState([]);
+
+  const query = useSelector((state) => state.search);
+  console.log(query);
 
   let headers = new Headers({
     "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
@@ -91,7 +96,28 @@ const Homepage = () => {
         const result = await response.json();
         const Info = result.data;
         console.log(Info);
-        sethiphopAlbums(Info);
+        setHiphopAlbums(Info);
+      } else {
+        console.log("error");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const fetchQuerySearch = async () => {
+    try {
+      const response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/deezer/search?q=` + query,
+        {
+          method: "GET",
+          headers,
+        }
+      );
+      if (response.ok) {
+        const result = await response.json();
+        const Info = result.data;
+        console.log(Info);
+        setQueryAlbums(Info);
       } else {
         console.log("error");
       }
@@ -104,30 +130,50 @@ const Homepage = () => {
     fetchRockAlbums();
     fetchPopAlbums();
     fetchHiphopAlbums();
+    fetchQuerySearch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [query]);
+
+  const getRandomAlbums = (albums) => {
+    // Randomly select 4 albums from the provided array
+    const shuffled = albums.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 4);
+  };
+
   return (
     <Container className="text-light pb-5 mb-5">
+      {query.length > 0 && (
+        <>
+          <h2>Results</h2>
+          <Row className="py-4">
+            {queryalbums &&
+              queryalbums
+                .slice(0, 12)
+                .map((album) => <AlbumCard key={album.id} album={album} />)}
+          </Row>
+        </>
+      )}
+
       <h2>Rock</h2>
       <Row className="py-4">
         {rockalbums &&
-          rockalbums
-            .slice(0, 4)
-            .map((album) => <AlbumCard key={album.id} album={album} />)}
+          getRandomAlbums(rockalbums).map((album) => (
+            <AlbumCard key={album.id} album={album} />
+          ))}
       </Row>
       <h2>Pop</h2>
       <Row className="py-4">
         {popalbums &&
-          popalbums
-            .slice(0, 4)
-            .map((album) => <AlbumCard key={album.id} album={album} />)}
+          getRandomAlbums(popalbums).map((album) => (
+            <AlbumCard key={album.id} album={album} />
+          ))}
       </Row>
       <h2>Hiphop</h2>
       <Row className="py-4">
         {hiphopalbums &&
-          hiphopalbums
-            .slice(0, 4)
-            .map((album) => <AlbumCard key={album.id} album={album} />)}
+          getRandomAlbums(hiphopalbums).map((album) => (
+            <AlbumCard key={album.id} album={album} />
+          ))}
       </Row>
     </Container>
   );

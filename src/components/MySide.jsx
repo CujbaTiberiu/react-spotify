@@ -1,11 +1,27 @@
 import React from "react";
-import { Navbar, Nav, Button, ButtonGroup } from "react-bootstrap";
+import { Navbar, Nav, Button } from "react-bootstrap";
 import { FaHome, FaBookOpen } from "react-icons/fa";
 import logo from "./logo/Spotify_Logo.png";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { setSearchWord } from "../redux/actions";
 
 const MySide = () => {
+  const dispatch = useDispatch();
+
+  const [query, setQuery] = useState("");
+
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(setSearchWord(query));
+  };
+
   return (
     <Navbar bg="navbar" variant="light" fixed="left" expand="sm">
       <div className="nav-container">
@@ -32,9 +48,15 @@ const MySide = () => {
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
-        <Form className="d-flex">
+
+        <Form className="d-flex" onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Control type="text" placeholder="Search" />
+            <Form.Control
+              type="text"
+              placeholder="Search"
+              value={query}
+              onChange={handleChange}
+            />
           </Form.Group>
           <Button variant="dark" type="submit" className="h-50">
             Go

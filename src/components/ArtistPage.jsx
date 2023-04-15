@@ -37,23 +37,23 @@ const ArtistPage = () => {
 
   return (
     artist !== null && (
-      <Container className="text-light">
+      <Container className="text-light py-5">
         <h2>Tracks</h2>
-        <Row>
+        <Row className="py-5">
           {artist.map((a) => (
-            <Col xs={6} md={3} className="text-center">
-              <a href={`/album/${a.id}`}>
+            <Col key={a.id} xs={6} md={3} className="text-center">
+              <Link to={"/album/" + a.album.id}>
                 <img className="img-fluid" src={a.album.cover_medium} alt="1" />
-              </a>
+              </Link>
               <p>
-                <Link className="text-light" to={"/album/" + a.artist.name}>
+                <Link className="text-light" to={"/album/" + a.album.id}>
                   {" "}
                   {a.title.length < 16
                     ? `${a.title}`
                     : `${a.title.substring(0, 16)}...`}
                   <br />
                 </Link>
-                <Link className="text-light" to={`/artist/${a.artist.name}`}>
+                <Link className="text-light" to={"/artist/" + a.artist.name}>
                   Artist: {a.artist.name}
                 </Link>
               </p>
@@ -65,4 +65,3 @@ const ArtistPage = () => {
   );
 };
 export default ArtistPage;
-//<img src={artist.picture_medium} alt="artist img"></img>

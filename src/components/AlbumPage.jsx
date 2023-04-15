@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import ListGroup from "react-bootstrap/ListGroup";
+import { BiAlbum } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { selectSong } from "../redux/actions";
 
 let headers = new Headers({
   "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
@@ -12,6 +14,11 @@ const AlbumPage = () => {
   const params = useParams();
   console.log(params);
   const [songs, setSongs] = useState(null);
+  const dispatch = useDispatch();
+
+  const handleSongClick = (selectedSong) => {
+    dispatch(selectSong(selectedSong));
+  };
 
   const fetchList = async () => {
     try {
@@ -37,17 +44,26 @@ const AlbumPage = () => {
 
   return (
     songs !== null && (
-      <Container>
+      <Container className="text-center my-5">
         <Row>
-          <ListGroup>
+          <Col xs={12} md={5}>
+            <img className="img-fluid" src={songs.cover_big} alt="album pic" />{" "}
+            <div className="text-light my-2 d-flex justify-content-center align-items-baseline">
+              <BiAlbum />
+              <p>Album name: {songs.title}</p>
+            </div>
+          </Col>
+          <Col xs={12} md={7} className="sm-mt-3">
             {songs.tracks?.data.map((track) => (
-              <Col>
-                <div>
-                  <ListGroup.Item key={track.id}>{track.title}</ListGroup.Item>
-                </div>
-              </Col>
+              <p
+                className="text-light"
+                key={track.id}
+                onClick={() => handleSongClick(track.title)}
+              >
+                {track.artist.name} - {track.title}
+              </p>
             ))}
-          </ListGroup>
+          </Col>
         </Row>
       </Container>
     )
@@ -55,4 +71,3 @@ const AlbumPage = () => {
 };
 
 export default AlbumPage;
-//            <img className="img-fluid" src={songs.cover_big} alt="1" />

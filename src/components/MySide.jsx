@@ -9,8 +9,8 @@ const MySide = () => {
   return (
     <Navbar bg="navbar" variant="light" fixed="left" expand="sm">
       <div className="nav-container">
-        <Link to="/">
-          <Navbar.Brand>
+        <Navbar.Brand>
+          <Link to="/" className="nav-link">
             <img
               src={logo}
               alt="Spotify_Logo"
@@ -18,14 +18,15 @@ const MySide = () => {
               height="40"
               className="mb-5"
             />
-          </Navbar.Brand>
-        </Link>
+          </Link>
+        </Navbar.Brand>
+
         <Navbar.Toggle aria-controls="navbarNavAltMarkup" />
         <Navbar.Collapse id="navbarNavAltMarkup">
           <Nav className="flex-column">
-            <Nav.Link href="/">
+            <Link to="/" className="nav-link">
               <FaHome className="me-2" /> Home
-            </Nav.Link>
+            </Link>
             <Nav.Link href="#">
               <FaBookOpen className="me-2" /> Your Library
             </Nav.Link>

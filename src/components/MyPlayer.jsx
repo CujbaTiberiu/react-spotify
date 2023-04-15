@@ -5,15 +5,19 @@ import previous from "./playerbuttons/Previous.png";
 import play from "./playerbuttons/Play.png";
 import next from "./playerbuttons/Next.png";
 import repeat from "./playerbuttons/Repeat.png";
+import { useSelector } from "react-redux";
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 const MyPlayer = () => {
+  const showSong = useSelector((state) => state.selectedSong);
+  console.log(showSong);
+
   return (
-    <Container fluid className="bg-container myPlayer mt-4">
+    <Container fluid className="bg-container myPlayer">
       <Row className="justify-content-center">
         <Col
-          xs={4}
-          md={3}
+          xs={6}
+          xl={8}
           className="playerControls mt-1 d-flex justify-content-center align-items-center"
         >
           <div>
@@ -35,8 +39,9 @@ const MyPlayer = () => {
           </div>
         </Col>
       </Row>
-      <Row className="justify-content-center playBar py-3">
+      <Row className="justify-content-center playBar">
         <Col xs={8} md={6}>
+          <p className="text-center">{showSong}</p>
           <ProgressBar now={0} />
         </Col>
       </Row>

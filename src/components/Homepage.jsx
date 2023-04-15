@@ -3,6 +3,7 @@ import AlbumCard from "./AlbumCard";
 import { useState, useEffect } from "react";
 
 const Homepage = () => {
+  // eslint-disable-next-line no-unused-vars
   let rockArtists = [
     "queen",
     "u2",
@@ -14,6 +15,7 @@ const Homepage = () => {
     "bonjovi",
   ];
 
+  // eslint-disable-next-line no-unused-vars
   let popArtists = [
     "maroon5",
     "coldplay",
@@ -23,6 +25,7 @@ const Homepage = () => {
     "arianagrande",
   ];
 
+  // eslint-disable-next-line no-unused-vars
   let hipHopArtists = ["eminem", "snoopdogg", "lilwayne", "drake", "kanyewest"];
   const [rockalbums, setRockAlbums] = useState([]);
   const [popalbums, setPopAlbums] = useState([]);
@@ -101,23 +104,30 @@ const Homepage = () => {
     fetchRockAlbums();
     fetchPopAlbums();
     fetchHiphopAlbums();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Container className="text-light pb-5 mb-5">
       <h2>Rock</h2>
-      <Row>
+      <Row className="py-4">
         {rockalbums &&
-          rockalbums.slice(0, 4).map((album) => <AlbumCard album={album} />)}
+          rockalbums
+            .slice(0, 4)
+            .map((album) => <AlbumCard key={album.id} album={album} />)}
       </Row>
       <h2>Pop</h2>
-      <Row>
+      <Row className="py-4">
         {popalbums &&
-          popalbums.slice(0, 4).map((album) => <AlbumCard album={album} />)}
+          popalbums
+            .slice(0, 4)
+            .map((album) => <AlbumCard key={album.id} album={album} />)}
       </Row>
       <h2>Hiphop</h2>
-      <Row>
+      <Row className="py-4">
         {hiphopalbums &&
-          hiphopalbums.slice(0, 4).map((album) => <AlbumCard album={album} />)}
+          hiphopalbums
+            .slice(0, 4)
+            .map((album) => <AlbumCard key={album.id} album={album} />)}
       </Row>
     </Container>
   );

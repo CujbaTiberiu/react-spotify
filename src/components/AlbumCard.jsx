@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 const AlbumCard = ({ album }) => {
   return (
     <Col xs={6} md={3} className="text-center">
-      <a href={`/album/${album.id}`}>
+      <Link to={"/album/" + album.album.id}>
         <img className="img-fluid" src={album.album.cover_medium} alt="1" />
-      </a>
+      </Link>
       <p>
         <Link className="text-light" to={"/album/" + album.album.id}>
           Album:{" "}

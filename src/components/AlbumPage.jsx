@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { BiAlbum } from "react-icons/bi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectSong } from "../redux/actions";
+import { deleteSong, saveSong } from "../redux/actions";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 let headers = new Headers({
   "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
@@ -18,6 +20,18 @@ const AlbumPage = () => {
 
   const handleSongClick = (selectedSong) => {
     dispatch(selectSong(selectedSong));
+  };
+
+  const savedSongs = useSelector((state) => state.favs.savedSongs);
+
+  const isSongSaved = (id) => savedSongs.includes(id);
+
+  const handleToggleFav = (id) => () => {
+    if (isSongSaved(id)) {
+      dispatch(deleteSong(id));
+    } else {
+      dispatch(saveSong(id));
+    }
   };
 
   const fetchList = async () => {
@@ -55,13 +69,25 @@ const AlbumPage = () => {
           </Col>
           <Col xs={12} md={7} className="sm-mt-3">
             {songs.tracks?.data.map((track) => (
-              <p
-                className="text-light"
-                key={track.id}
-                onClick={() => handleSongClick(track.title)}
-              >
-                {track.artist.name} - {track.title}
-              </p>
+              <div key={track.id} className="d-flex align-items-baseline">
+                {isSongSaved(track.id) ? (
+                  <AiFillHeart
+                    onClick={handleToggleFav(track.id)}
+                    className="text-light mx-1"
+                  />
+                ) : (
+                  <AiOutlineHeart
+                    onClick={handleToggleFav(track.id)}
+                    className="text-light mx-1"
+                  />
+                )}
+                <p
+                  className="text-light"
+                  onClick={() => handleSongClick(track)}
+                >
+                  {track.artist.name} - {track.title}
+                </p>
+              </div>
             ))}
           </Col>
         </Row>

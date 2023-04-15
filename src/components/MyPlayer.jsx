@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 const MyPlayer = () => {
-  const showSong = useSelector((state) => state.selectedSong);
+  const showSong = useSelector((state) => state.selSong.selectedSong?.title);
   console.log(showSong);
 
   return (
